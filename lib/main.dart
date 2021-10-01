@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './transaction.dart';
 
@@ -41,6 +43,8 @@ class MyHomePage extends StatelessWidget {
           title: Text('Flutter App'),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               width: double.infinity,
@@ -50,11 +54,89 @@ class MyHomePage extends StatelessWidget {
                 elevation: 5,
               ),
             ),
+            Card(
+              elevation: 5,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Title',
+                      ),
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Amount',
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Add Transaction',
+                          style: TextStyle(
+                            letterSpacing: 1,
+                          ),
+                        ),
+                        style: ButtonStyle(
+                          textStyle: MaterialStateProperty.all(
+                            TextStyle(color: Colors.purple),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
             Column(
               children: transactions
                   .map(
                     (tx) => Card(
-                      child: Text(tx.title),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 15,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              '\$${tx.amount}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.purple,
+                              ),
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                tx.title,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                DateFormat.yMMMd().format(tx.date),
+                                style: TextStyle(color: Colors.grey),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   )
                   .toList(),
